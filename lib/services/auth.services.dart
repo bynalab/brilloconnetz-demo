@@ -1,8 +1,12 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'dart:convert';
 import 'dart:math';
 import 'package:brilloconnetz/model/db_models.dart';
 import 'package:brilloconnetz/services/storage.services.dart';
 import 'package:brilloconnetz/services/user.services.dart';
 import 'package:uuid/uuid.dart';
+import 'package:crypto/crypto.dart';
 
 class AuthService {
   static const loginKey = 'is_loggedIn';
@@ -32,19 +36,21 @@ class AuthService {
   }
 
   Future<User?> login(String login, String password) async {
+    final md5Password = generateMd5(password);
+
     final user = await User()
         .select()
         .email
         .equals(login)
         .and
         .password
-        .equals(password)
+        .equals(md5Password)
         .or
         .phone
         .equals(login)
         .and
         .password
-        .equals(password)
+        .equals(md5Password)
         .toSingle();
 
     return user;
@@ -57,12 +63,16 @@ class AuthService {
     return code;
   }
 
+  String generateMd5(String input) {
+    return md5.convert(utf8.encode(input)).toString();
+  }
+
   Future<bool> register(User user) async {
     final userId = const Uuid().v1();
 
     user.userId = userId;
 
-    // encrypt user.password
+    user.password = generateMd5(user.password!);
     user.createdAt = DateTime.now();
 
     final register = await user.save();
