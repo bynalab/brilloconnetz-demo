@@ -7,6 +7,7 @@ import 'package:brilloconnetz/services/auth.services.dart';
 import 'package:brilloconnetz/validator.dart';
 import 'package:brilloconnetz/viewmodel/auth.viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum InputField { phoneNumber, email, password, interest }
 
@@ -95,6 +96,10 @@ class RegisterScreenState extends State<RegisterScreen> {
                           hintText: 'Phone Number',
                         ),
                         onTap: () => setCurrentField(InputField.phoneNumber),
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                       ),
                       const SizedBox(height: 24),
                       TextFormField(
@@ -164,13 +169,11 @@ class RegisterScreenState extends State<RegisterScreen> {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const LoginScreen(),
+                          builder: (BuildContext context) {
+                            return const LoginScreen();
+                          },
                         ),
                       ),
-
-                      // Navigator.pushNamed(context, LoginScreen.id),
-                      // onTap: () => namedNavigateTo(LoginScreen.id),
                       child: Text(
                         'Sign in',
                         style: TextStyle(
