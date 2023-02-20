@@ -1,0 +1,37 @@
+name: brilloconnetz
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  splash_screen_view: ^3.0.0
+  get_storage: ^2.0.3
+  uuid: ^3.0.5
+  sqfentity:
+  sqfentity_gen:
+  http: ^0.13.5
+  path_provider: ^2.0.8
+  recase: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.1.5
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
